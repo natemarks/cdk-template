@@ -1,0 +1,17 @@
+{
+  "/app/env/admin_team": "Quality Engineering",
+  "/app/env/aws_account_name": "MyApp Staging",
+  "/app/env/config_id": "staging",
+  "/app/env/stack_prefix": "Staging",
+  "/app/env/aws_account_number": "8901234567",
+  "/app/env/default_domain": "staging.myapp.com",
+  "/app/env/default_region": "us-east-1",
+  "/app/env/app_vpc/cidr": "10.102.0.0/16",
+  "/app/env/app_vpc/max_azs": 3,
+  "/app/env/app_vpc/termination_protection": false,
+  "/app/env/eks_cluster/hello/api_version": "v1",
+  "/app/env/eks_cluster/hello/kind": "Pod",
+  "/app/env/eks_cluster/hello/app_name": "hello",
+  "/app/env/eks_cluster/hello/app_image": "paulbouwer/hello-kubernetes:1.5",
+  "/app/env/eks_cluster/hello/app_port": 8080
+}
