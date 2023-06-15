@@ -37,10 +37,6 @@ class Environment:
     NAMED_DATA = []  # type: List[str]
     UNIQUE_DATA = []  # type: List[str]
 
-    KEY_PREFIX = {
-        "EnvironmentConfig": "/app/env/",
-    }
-
     VALID_ENV_IDS = [
         "dev",
         "staging",
