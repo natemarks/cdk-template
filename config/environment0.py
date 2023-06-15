@@ -57,3 +57,10 @@ class Environment0(Environment):
             env_data=self.environment_data,
         )
         self.app_vpc = cfg.data
+
+    def to_flat_store(self) -> FlatStore:
+        """sdfsdf"""
+        result = self.init_flatstore()
+        result.update(AppVpcConfig.to_flat_store(self.app_vpc))
+        result.update(EksClusterConfig.to_flat_store(self.eks_cluster))
+        return result

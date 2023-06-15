@@ -48,3 +48,14 @@ class AppVpcConfig(UniqueStackConfig):
         except TypeError as err:
             module_logger.error(err)
             self.data = None
+
+    @classmethod
+    def to_flat_store(cls, data: AppVpcData) -> FlatStore:
+        """return the flat store keys for the given AppVpcData"""
+        attributes = ["cidr", "max_azs", "termination_protection"]
+        result = {}
+        for attr in attributes:
+            result[f"{AppVpcConfig.FLATSTORE_PREFIX}{attr}"] = getattr(
+                data, attr
+            )
+        return result

@@ -36,6 +36,7 @@ class Environment:
     # stack data types to validate in the class. ALWAYS OVERRIDE IN SUBCLASS
     NAMED_DATA = []  # type: List[str]
     UNIQUE_DATA = []  # type: List[str]
+    ENVIRONMENT_FLAT_STORE_PREFIX = "/app/env/"
 
     VALID_ENV_IDS = [
         "dev",
@@ -85,7 +86,7 @@ class Environment:
         """load environment data from default data source(project static data)"""
         related_keys = StackConfig.get_related_keys(
             flat_store=self.flat_store,
-            prefix="/app/env/",
+            prefix=Environment.ENVIRONMENT_FLAT_STORE_PREFIX,
         )
         # pylint: disable=missing-kwoa
         self.environment_data = EnvironmentData(**related_keys)
@@ -200,4 +201,13 @@ class Environment:
         for unique in self.UNIQUE_DATA:
             unique_configs[unique] = asdict(getattr(self, unique))
         result.update(unique_configs)
+        return result
+
+    def init_flatstore(self) -> FlatStore:
+        """return a flat store object with ONLY the environment data
+        concrete classes will add relevant keys to this base data
+        """
+        result = {}
+        for key, value in self.environment_data.__dict__.items():
+            result[f"{Environment.ENVIRONMENT_FLAT_STORE_PREFIX}{key}"] = value
         return result

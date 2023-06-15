@@ -3,6 +3,7 @@
 
 """
 from dataclasses import dataclass
+from typing import Dict
 from config.base import (
     get_logger,
     EnvironmentData,
@@ -58,3 +59,23 @@ class EksClusterConfig(NamedStackConfig):
         except TypeError as err:
             module_logger.error(err)
             self.data = None
+
+    @classmethod
+    def to_flat_store(cls, data: Dict[str, EksClusterData]) -> FlatStore:
+        """return the flat store keys for the given AppVpcData"""
+
+        attributes = [
+            "api_version",
+            "kind",
+            "app_name",
+            "app_image",
+            "app_port",
+        ]
+        result = {}
+
+        for key, value in data.items():
+            for attr in attributes:
+                result[
+                    f"{EksClusterConfig.FLATSTORE_PREFIX}{key}{attr}"
+                ] = getattr(value, attr)
+        return result

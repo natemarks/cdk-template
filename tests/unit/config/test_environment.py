@@ -35,6 +35,28 @@ def test_environment0(request, update_golden):
         pytest.param(id="dev"),
     ],
 )
+def test_environment0_to_flat_store(request, update_golden):
+    """test Environment0 data
+
+    Each test case creates an Environment0 object from flat store data and compares
+    the Environment0.as_dict() output to the expected data in the golden file
+
+    """
+    case = Case(request)
+    res = Environment0(flat_store=case.input())
+    res.set_configs()
+    if update_golden:
+        case.update_expected(res.to_flat_store())
+    assert res.to_flat_store() == case.expected()
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "",
+    [
+        pytest.param(id="dev"),
+    ],
+)
 def test_environment_validate(request, update_golden):
     """validate sets the .valid attribute"""
     case = Case(request)
