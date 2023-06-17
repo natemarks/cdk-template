@@ -23,6 +23,16 @@ Change the iac tag in app.py. I use this to keep track of what IAC project manag
 cdk.Tags.of(app).add("iac", "cdk-template")
 ```
 
+set the aws account number of your dev account:
+tests/integration/awsapi/test_helper.py: 
+```
+@pytest.mark.dev
+def test_get_caller_identity():
+    """just check the account number"""
+    result = get_caller_identity()
+    assert result.account == "709310380790"
+```
+
 ## TODO: Document Template Features
 flat store: there are some simple examples for using the flat store. 
 Environment class: is the object used to organize the flat store data for use in the classes

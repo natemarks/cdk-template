@@ -60,16 +60,28 @@ shellcheck: ## use black to format python files
        git ls-files 'scripts/*.sh' |  xargs shellcheck --format=gcc; \
     )
 
-unittest: ## run test that don't require deployed resources
+unit-test: ## run tests that have no external dependencies
 	( \
        source .venv/bin/activate; \
        python3 -m pytest -v -m "unit" tests/; \
     )
 
-update_golden: ## update test golden files using the current actual results
+unit-update_golden: ## update unit test golden files
 	( \
        source .venv/bin/activate; \
        python3 -m pytest -v -m "unit" tests/ --update_golden; \
+    )
+
+dev-test: ## run test that require dev AWS account credentials
+	( \
+       source .venv/bin/activate; \
+       python3 -m pytest -v -m "dev" tests/; \
+    )
+
+dev-update_golden: ## update dev golden files
+	( \
+       source .venv/bin/activate; \
+       python3 -m pytest -v -m "dev" tests/ --update_golden; \
     )
 
 validate_environment: ## validate environment data
@@ -80,7 +92,7 @@ validate_environment: ## validate environment data
        PYTHONPATH="." python3 scripts/validate.py $(environment); \
     )
 
-static: shellcheck black pylint unittest ## run all static checks
+static: shellcheck black pylint unit-test ## run all static checks
 
 clean-cache: ## clean python adn pytest cache data
 	@find . -type f -name "*.py[co]" -delete -not -path "./.venv/*"

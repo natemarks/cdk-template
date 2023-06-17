@@ -1,24 +1,9 @@
 """validate the entire config for an environment
 exit 0 if it's valid. exit 1 if not
 """
-import argparse
 import sys
+from awsapi.helper import get_args
 from config.environment0 import Environment0
-
-
-def get_args() -> argparse.Namespace:
-    """get args"""
-    description = (
-        "validate all config data for an environment. "
-        "exit 0 if valid. exit 1 if not"
-    )
-    parser = argparse.ArgumentParser(description=description)
-    parser.add_argument(
-        "environment",
-        type=str,
-        help="[ dev | staging | production]",
-    )
-    return parser.parse_args()
 
 
 if __name__ == "__main__":
